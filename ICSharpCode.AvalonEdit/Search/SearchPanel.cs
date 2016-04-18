@@ -424,14 +424,14 @@ namespace ICSharpCode.AvalonEdit.Search
 		/// <summary>
 		/// Closes the SearchPanel and removes it.
 		/// </summary>
-		[Obsolete("Use the Uninstall method instead!")]
-		public void CloseAndRemove()
-		{
-			Close();
-			textArea.DocumentChanged -= textArea_DocumentChanged;
-			if (currentDocument != null)
-				currentDocument.TextChanged -= textArea_Document_TextChanged;
-		}
+        //[Obsolete("Use the Uninstall method instead!")]
+        private void CloseAndRemove()
+        {
+            Close();
+            textArea.DocumentChanged -= textArea_DocumentChanged;
+            if (currentDocument != null)
+                currentDocument.TextChanged -= textArea_Document_TextChanged;
+        }
 		
 		/// <summary>
 		/// Opens the an existing search panel.

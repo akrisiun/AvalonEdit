@@ -78,7 +78,13 @@ namespace ICSharpCode.AvalonEdit
 		}
 		
 		#if !DOTNET4
-		void SetCurrentValue(DependencyProperty property, object value)
+
+        /// <summary>
+        /// SetCurrentValue for .NET client profile
+        /// </summary>
+        /// <param name="property"></param>
+        /// <param name="value"></param>
+		public new void SetCurrentValue(DependencyProperty property, object value)
 		{
 			SetValue(property, value);
 		}

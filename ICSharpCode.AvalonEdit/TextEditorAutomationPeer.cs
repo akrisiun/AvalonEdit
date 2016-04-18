@@ -20,7 +20,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
+//using System.Windows.Automation.Provider; // UiAutomation
 using System.Windows.Controls;
 
 using ICSharpCode.AvalonEdit.Utils;
@@ -30,7 +30,7 @@ namespace ICSharpCode.AvalonEdit
 	/// <summary>
 	/// Exposes <see cref="ICSharpCode.AvalonEdit.TextEditor"/> to automation.
 	/// </summary>
-	public class TextEditorAutomationPeer : FrameworkElementAutomationPeer, IValueProvider
+	public class TextEditorAutomationPeer : FrameworkElementAutomationPeer // , IValueProvider
 	{
 		/// <summary>
 		/// Creates a new TextEditorAutomationPeer instance.
@@ -43,17 +43,31 @@ namespace ICSharpCode.AvalonEdit
 		private TextEditor TextEditor {
 			get { return (TextEditor)base.Owner; }
 		}
-		
-		void IValueProvider.SetValue(string value)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        // void IValueProvider.
+        public void SetValue(string value)
 		{
 			this.TextEditor.Text = value;
 		}
-		
-		string IValueProvider.Value {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        // string IValueProvider.
+        public string Value
+        {
 			get { return this.TextEditor.Text; }
 		}
-		
-		bool IValueProvider.IsReadOnly {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        // bool IValueProvider.
+        public bool IsReadOnly
+        {
 			get { return this.TextEditor.IsReadOnly; }
 		}
 		
