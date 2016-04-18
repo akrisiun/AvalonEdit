@@ -88,7 +88,7 @@ namespace ICSharpCode.AvalonEdit
 		
 		internal void RaiseIsReadOnlyChanged(bool oldValue, bool newValue)
 		{
-			RaisePropertyChangedEvent(ValuePatternIdentifiers.IsReadOnlyProperty, Boxes.Box(oldValue), Boxes.Box(newValue));
+            //RaisePropertyChangedEvent(ValuePatternIdentifiers.IsReadOnlyProperty, Boxes.Box(oldValue), Boxes.Box(newValue));
 		}
 	}
 }
