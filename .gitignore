@@ -8,3 +8,6 @@ bin/
 /Documentation/IntelliSense
 
 lib/
+
+.vs*/
+vendor/
