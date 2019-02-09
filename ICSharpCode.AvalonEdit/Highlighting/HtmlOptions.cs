@@ -67,7 +67,7 @@ namespace ICSharpCode.AvalonEdit.Highlighting
 			#if DOTNET4
 			WebUtility.HtmlEncode(color.ToCss(), writer);
 			#else
-            //HttpUtility.HtmlEncode(color.ToCss(), writer);
+			HttpUtility.HtmlEncode(color.ToCss(), writer);
 			#endif
 			writer.Write('"');
 		}

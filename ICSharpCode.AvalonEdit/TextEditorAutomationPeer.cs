@@ -20,7 +20,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-//using System.Windows.Automation.Provider; // UiAutomation
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 
 using ICSharpCode.AvalonEdit.Utils;
@@ -30,7 +30,7 @@ namespace ICSharpCode.AvalonEdit
 	/// <summary>
 	/// Exposes <see cref="ICSharpCode.AvalonEdit.TextEditor"/> to automation.
 	/// </summary>
-	public class TextEditorAutomationPeer : FrameworkElementAutomationPeer // , IValueProvider
+	public class TextEditorAutomationPeer : FrameworkElementAutomationPeer, IValueProvider
 	{
 		/// <summary>
 		/// Creates a new TextEditorAutomationPeer instance.
@@ -43,46 +43,42 @@ namespace ICSharpCode.AvalonEdit
 		private TextEditor TextEditor {
 			get { return (TextEditor)base.Owner; }
 		}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        // void IValueProvider.
-        public void SetValue(string value)
+		
+		void IValueProvider.SetValue(string value)
 		{
 			this.TextEditor.Text = value;
 		}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        // string IValueProvider.
-        public string Value
-        {
+		
+		string IValueProvider.Value {
 			get { return this.TextEditor.Text; }
 		}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        // bool IValueProvider.
-        public bool IsReadOnly
-        {
+		
+		bool IValueProvider.IsReadOnly {
 			get { return this.TextEditor.IsReadOnly; }
 		}
-		
+
+		/// <inheritdoc/>
+		protected override AutomationControlType GetAutomationControlTypeCore()
+		{
+			return AutomationControlType.Document;
+		}
+
 		/// <inheritdoc/>
 		public override object GetPattern(PatternInterface patternInterface)
 		{
 			if (patternInterface == PatternInterface.Value)
 				return this;
-			
+
 			if (patternInterface == PatternInterface.Scroll) {
 				ScrollViewer scrollViewer = this.TextEditor.ScrollViewer;
 				if (scrollViewer != null)
-					return UIElementAutomationPeer.CreatePeerForElement(scrollViewer);
+					return UIElementAutomationPeer.FromElement(scrollViewer);
 			}
-			
+
+			if (patternInterface == PatternInterface.Text) {
+				return FromElement(this.TextEditor.TextArea);
+			}
+
 			return base.GetPattern(patternInterface);
 		}
 		

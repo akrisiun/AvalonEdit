@@ -139,7 +139,7 @@ namespace ICSharpCode.AvalonEdit.Highlighting
 					#if DOTNET4
 					WebUtility.HtmlEncode(c.ToString(), htmlWriter);
 					#else
-                    //HttpUtility.HtmlEncode(c.ToString(), htmlWriter);
+					HttpUtility.HtmlEncode(c.ToString(), htmlWriter);
 					#endif
 					break;
 			}
@@ -184,7 +184,7 @@ namespace ICSharpCode.AvalonEdit.Highlighting
 			#if DOTNET4
 			WebUtility.HtmlEncode(value, htmlWriter);
 			#else
-            //HttpUtility.HtmlEncode(value, htmlWriter);
+			HttpUtility.HtmlEncode(value, htmlWriter);
 			#endif
 		}
 		
@@ -256,11 +256,10 @@ namespace ICSharpCode.AvalonEdit.Highlighting
 		public override void BeginHyperlinkSpan(Uri uri)
 		{
 			WriteIndentationAndSpace();
-            string link = uri.ToString();
 			#if DOTNET4
-			    link = WebUtility.HtmlEncode(uri.ToString());
+			string link = WebUtility.HtmlEncode(uri.ToString());
 			#else
-                //link = HttpUtility.HtmlEncode(uri.ToString());
+			string link = HttpUtility.HtmlEncode(uri.ToString());
 			#endif
 			htmlWriter.Write("<a href=\"" + link + "\">");
 			endTagStack.Push("</a>");

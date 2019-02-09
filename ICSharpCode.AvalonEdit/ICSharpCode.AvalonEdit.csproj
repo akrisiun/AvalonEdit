@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{6C55B776-26D4-4DB3-A6AB-87E783B2F3D1}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">Net40</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">WithNRefactory</Platform>
     <OutputType>Library</OutputType>
     <RootNamespace>ICSharpCode.AvalonEdit</RootNamespace>
     <AssemblyName>ICSharpCode.AvalonEdit</AssemblyName>
@@ -27,15 +27,12 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Net35' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Net40' ">
+  <PropertyGroup>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <DefineConstants>DOTNET4</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'WithNRefactory' ">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <DefineConstants>DOTNET4;NREFACTORY</DefineConstants>
     <AssemblyOriginatorKeyFile>..\..\NRefactory\ICSharpCode.NRefactory.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -61,10 +58,8 @@
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Net35'">
-    <OutputPath>..\lib\</OutputPath>
-    <DocumentationFile />
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>DEBUG;NREFACTORY</DefineConstants>
+    <DefineConstants>DEBUG;DOTNET4;NREFACTORY</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Net40'">
     <Prefer32Bit>false</Prefer32Bit>
@@ -81,17 +76,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|WithNRefactory'">
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\ICSharpCode.NRefactory.dll</HintPath>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>..\..\..\..\Sanitex\WebLib\Visual\CodeCompletion\lib\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
-      <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll</HintPath>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -104,14 +95,23 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
-      <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xaml.dll</HintPath>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="UIAutomationTypes">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -188,8 +188,11 @@
       <DependentUpon>Selection.cs</DependentUpon>
     </Compile>
     <Compile Include="Editing\ImeNativeWrapper.cs" />
+    <Compile Include="Editing\MouseSelectionMode.cs" />
     <Compile Include="Editing\SelectionSegment.cs" />
     <Compile Include="Editing\ImeSupport.cs" />
+    <Compile Include="Editing\TextAreaAutomationPeer.cs" />
+    <Compile Include="Editing\TextRangeProvider.cs" />
     <Compile Include="Folding\FoldingElementGenerator.cs" />
     <Compile Include="Folding\FoldingManager.cs" />
     <Compile Include="Folding\FoldingMargin.cs" />
@@ -428,6 +431,7 @@
     <EmbeddedResource Include="Highlighting\Resources\JavaScript-Mode.xshd" />
     <EmbeddedResource Include="Highlighting\Resources\Patch-Mode.xshd" />
     <EmbeddedResource Include="Highlighting\Resources\PHP-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\Python-Mode.xshd" />
     <EmbeddedResource Include="Highlighting\Resources\Tex-Mode.xshd" />
     <EmbeddedResource Include="Highlighting\Resources\VB-Mode.xshd" />
     <EmbeddedResource Include="Highlighting\Resources\XML-Mode.xshd" />
@@ -460,5 +464,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Highlighting\Resources\MarkDown-Mode.xshd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Highlighting\Resources\TSQL-Mode.xshd" />
   </ItemGroup>
 </Project>
