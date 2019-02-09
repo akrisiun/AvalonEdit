@@ -20,6 +20,8 @@
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <FileAlignment>4096</FileAlignment>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <!--<PropertyGroup Condition=" '$(Platform)' == 'Net40' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -50,6 +52,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Net35'">
     <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>NREFACTORY</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Net40'">
     <Prefer32Bit>false</Prefer32Bit>
@@ -66,11 +69,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|WithNRefactory'">
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NRefactory\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj" Condition="$(DefineConstants.Contains('NREFACTORY'))">
-      <Project>{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}</Project>
-      <Name>ICSharpCode.NRefactory</Name>
-    </ProjectReference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>..\lib\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -119,15 +124,12 @@
   <ItemGroup>
     <EmbeddedResource Include="CustomHighlighting.xshd" />
   </ItemGroup>
-  <ItemGroup Condition="!$(DefineConstants.Contains('DOTNET4'))">
-    <None Include="app.net35.config" />
-  </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('DOTNET4'))">
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
-      <Project>{6C55B776-26D4-4DB3-A6AB-87E783B2F3D1}</Project>
+      <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
   </ItemGroup>
